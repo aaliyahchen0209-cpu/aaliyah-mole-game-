@@ -160,163 +160,62 @@
       z-index: 0;
     }
 
-    .mole {
-      position: absolute;
-      z-index: 2;
-      left: 12%;
-      bottom: -8%;
-      width: 76%;
-      aspect-ratio: 1;
-      border-radius: 48% 48% 42% 42%;
-      background: #b88a72;
-      border: 4px solid #9a6d5c;
-      box-shadow: inset 0 8px 0 rgba(255,255,255,.16);
-      transform: translateY(105%);
-      transition: transform .22s cubic-bezier(.2,.85,.25,1.2);
-      user-select: none;
-    }
+.mole {
+  position: absolute;
+  z-index: 2;
+  left: 12%;
+  bottom: -8%;
+  width: 76%;
+  aspect-ratio: 1;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform: translateY(105%);
+  transition: transform .22s cubic-bezier(.2,.85,.25,1.2);
+  user-select: none;
+}
 
-    .mole.up {
-      transform: translateY(5%);
-    }
-
+.mole.up {
+  transform: translateY(5%);
+}
     .mole.hit {
-      animation: hit .22s ease forwards;
-    }
+  animation: hit .5s ease forwards;
+}
+@keyframes hit {
+  0% {
+    transform: translateY(5%) scale(1);
+  }
+  35% {
+    transform: translateY(5%) scale(.86) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(105%) scale(.7);
+  }
+}
+@keyframes feedback {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(.65) rotate(-8deg);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -5px) scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -58px) scale(.9) rotate(0);
+  }
+}
 
-    .ear {
-      position: absolute;
-      top: -9%;
-      width: 28%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: #b88a72;
-      border: 4px solid #9a6d5c;
-      z-index: -1;
-    }
-
-    .ear::after {
-      content: "";
-      position: absolute;
-      inset: 25%;
-      border-radius: 50%;
-      background: #efb2bd;
-    }
-
-    .ear.left { left: 5%; }
-    .ear.right { right: 5%; }
-
-    .eye {
-      position: absolute;
-      top: 36%;
-      width: 9%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: #55454a;
-    }
-
-    .eye.left { left: 30%; }
-    .eye.right { right: 30%; }
-
-    .nose {
-      position: absolute;
-      left: 50%;
-      top: 48%;
-      width: 11%;
-      aspect-ratio: 1;
-      transform: translateX(-50%);
-      border-radius: 55% 55% 60% 60%;
-      background: #ef9faf;
-    }
-
-    .mouth {
-      position: absolute;
-      left: 50%;
-      top: 57%;
-      width: 22%;
-      height: 12%;
-      transform: translateX(-50%);
-      border-bottom: 3px solid #70525a;
-      border-radius: 0 0 50% 50%;
-    }
-
-    .blush {
-      position: absolute;
-      top: 51%;
-      width: 17%;
-      height: 8%;
-      border-radius: 50%;
-      background: rgba(255, 171, 190, .65);
-    }
-
-    .blush.left { left: 13%; }
-    .blush.right { right: 13%; }
-
-    .feedback {
-      position: absolute;
-      z-index: 10;
-      pointer-events: none;
-      left: 50%;
-      top: 25%;
-      transform: translate(-50%, 0) scale(.7);
-      font-size: clamp(22px, 4vw, 34px);
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 3px 0 #c986a0, 0 0 8px rgba(255,255,255,.8);
-      opacity: 0;
-    }
-
-    .feedback.show {
-      animation: feedback .65s ease-out forwards;
-    }
-
-    .spark {
-      position: absolute;
-      z-index: 9;
-      pointer-events: none;
-      width: 9px;
-      height: 18px;
-      border-radius: 999px;
-      background: #fff;
-      left: 50%;
-      top: 50%;
-      opacity: 0;
-    }
-
-    .spark.show {
-      animation: sparkle .45s ease-out forwards;
-    }
-
-    .game-over {
-      margin: 3px 0 2px;
-      min-height: 28px;
-      font-weight: 800;
-      color: #9a7b8c;
-    }
-
-    @keyframes hit {
-      0% { transform: translateY(5%) scale(1); }
-      45% { transform: translateY(5%) scale(.86) rotate(-4deg); }
-      100% { transform: translateY(105%) scale(.7); }
-    }
-
-    @keyframes feedback {
-      0% { opacity: 0; transform: translate(-50%, 15px) scale(.65) rotate(-8deg); }
-      25% { opacity: 1; transform: translate(-50%, -5px) scale(1.12) rotate(4deg); }
-      100% { opacity: 0; transform: translate(-50%, -58px) scale(.9) rotate(0); }
-    }
-
-    @keyframes sparkle {
-      0% { opacity: 1; transform: translate(-50%, -50%) rotate(0) translateY(0); }
-      100% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) translateY(-35px); }
-    }
-
-    @media (max-width: 500px) {
-      body { padding-top: 15px; }
-      .panel { padding: 12px; border-radius: 24px; }
-      .board { gap: 13px; }
-      .stat strong { font-size: 21px; }
-    }
+.mole-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
   </style>
 </head>
 
@@ -344,187 +243,288 @@
   </main>
 
   <script>
-    const board = document.getElementById("board");
-    const scoreEl = document.getElementById("score");
-    const timeEl = document.getElementById("time");
-    const comboEl = document.getElementById("combo");
-    const startBtn = document.getElementById("startBtn");
-    const gameOverEl = document.getElementById("gameOver");
+ 
+const board = document.getElementById("board");
+const scoreEl = document.getElementById("score");
+const timeEl = document.getElementById("time");
+const comboEl = document.getElementById("combo");
+const startBtn = document.getElementById("startBtn");
+const gameOverEl = document.getElementById("gameOver");
 
-    const HOLE_COUNT = 9;
-    const GAME_TIME = 30;
+const HOLE_COUNT = 9;
+const GAME_TIME = 30;
 
-    let score = 0;
-    let combo = 0;
-    let timeLeft = GAME_TIME;
-    let gameRunning = false;
-    let currentMole = null;
-    let moleTimer = null;
-    let countdownTimer = null;
+let score = 0;
+let combo = 0;
+let timeLeft = GAME_TIME;
+let gameRunning = false;
+let currentMole = null;
 
-    function createBoard() {
-      board.innerHTML = "";
+let moleTimer = null;
+let countdownTimer = null;
+let appearTimer = null;
+let hitTimer = null;
+let hitCleanupTimer = null;
+let blinkTimer = null;
 
-      for (let i = 0; i < HOLE_COUNT; i++) {
-        const hole = document.createElement("div");
-        hole.className = "hole";
-        hole.dataset.index = i;
+function setFrame(mole, frame) {
+  const img = mole.querySelector(".mole-image");
+  if (img) img.src = `mole_${frame}.png`;
+}
 
-        const mole = document.createElement("div");
-        mole.className = "mole";
-        mole.innerHTML = `
-          <span class="ear left"></span>
-          <span class="ear right"></span>
-          <span class="eye left"></span>
-          <span class="eye right"></span>
-          <span class="nose"></span>
-          <span class="mouth"></span>
-          <span class="blush left"></span>
-          <span class="blush right"></span>
-        `;
+function createBoard() {
+  board.innerHTML = "";
 
-        hole.appendChild(mole);
-        board.appendChild(hole);
+  for (let i = 0; i < HOLE_COUNT; i++) {
+    const hole = document.createElement("div");
+    hole.className = "hole";
+    hole.dataset.index = i;
 
-        mole.addEventListener("click", (event) => {
-          event.stopPropagation();
-          hitMole(mole, hole);
-        });
-      }
+    const mole = document.createElement("div");
+    mole.className = "mole";
+
+    const img = document.createElement("img");
+    img.className = "mole-image";
+    img.src = "mole_1.png";
+    img.alt = "地鼠";
+
+    mole.appendChild(img);
+    hole.appendChild(mole);
+    board.appendChild(hole);
+
+    mole.addEventListener("click", (event) => {
+      event.stopPropagation();
+      hitMole(mole, hole);
+    });
+  }
+}
+
+function clearAnimationTimers() {
+  clearInterval(appearTimer);
+  clearInterval(hitTimer);
+  clearTimeout(hitCleanupTimer);
+  clearInterval(blinkTimer);
+
+  appearTimer = null;
+  hitTimer = null;
+  hitCleanupTimer = null;
+  blinkTimer = null;
+}
+
+function playAppearAnimation(mole) {
+  clearInterval(appearTimer);
+
+  let frame = 1;
+  setFrame(mole, frame);
+
+  appearTimer = setInterval(() => {
+    if (!gameRunning || currentMole !== mole ||
+        !mole.classList.contains("up")) {
+      clearInterval(appearTimer);
+      appearTimer = null;
+      return;
     }
 
-    function hitMole(mole, hole) {
-      if (!gameRunning || !mole.classList.contains("up")) return;
+    frame = frame >= 8 ? 1 : frame + 1;
+    setFrame(mole, frame);
+  }, 100);
+}
 
-      score += 10;
-      combo += 1;
+function playHitAnimation(mole) {
+  clearInterval(appearTimer);
+  appearTimer = null;
+  clearInterval(hitTimer);
 
-      // 連擊加分
-      if (combo >= 5) score += 5;
+  let frame = 9;
+  setFrame(mole, frame);
 
-      updateHUD();
-      showFeedback(hole, combo >= 5 ? "BONUS! ✨" : "+10 💕");
-      createSparkles(hole);
-
-      mole.classList.remove("up");
-      mole.classList.add("hit");
-
-      setTimeout(() => {
-        mole.classList.remove("hit");
-      }, 240);
-
-      currentMole = null;
-      scheduleNextMole(150);
+  hitTimer = setInterval(() => {
+    if (frame < 14) {
+      frame++;
+      setFrame(mole, frame);
+    } else {
+      clearInterval(hitTimer);
+      hitTimer = null;
     }
+  }, 75);
+}
 
-    function showFeedback(hole, text) {
-      const feedback = document.createElement("div");
-      feedback.className = "feedback";
-      feedback.textContent = text;
-      hole.appendChild(feedback);
+function hitMole(mole, hole) {
+  if (!gameRunning || !mole.classList.contains("up")) return;
 
-      requestAnimationFrame(() => feedback.classList.add("show"));
+  clearTimeout(moleTimer);
+  clearInterval(appearTimer);
+  appearTimer = null;
 
-      setTimeout(() => feedback.remove(), 700);
-    }
+  score += 10;
+  combo += 1;
 
-    function createSparkles(hole) {
-      for (let i = 0; i < 5; i++) {
-        const spark = document.createElement("span");
-        spark.className = "spark";
-        spark.style.transform = `translate(-50%, -50%) rotate(${i * 72}deg)`;
-        hole.appendChild(spark);
+  if (combo >= 5) score += 5;
 
-        requestAnimationFrame(() => spark.classList.add("show"));
-        setTimeout(() => spark.remove(), 500);
-      }
-    }
+  updateHUD();
+  showFeedback(hole, combo >= 5 ? "BONUS! ✨" : "+10 💕");
+  createSparkles(hole);
 
-    function hideCurrentMole() {
-      if (currentMole) {
-        currentMole.classList.remove("up");
-        currentMole = null;
-      }
-    }
+  mole.classList.remove("up");
+  mole.classList.add("hit");
+  currentMole = null;
 
-    function showRandomMole() {
-      if (!gameRunning) return;
+  playHitAnimation(mole);
 
+  hitCleanupTimer = setTimeout(() => {
+    mole.classList.remove("hit");
+    setFrame(mole, 1);
+    hitCleanupTimer = null;
+  }, 520);
+
+  scheduleNextMole(520);
+}
+
+function showFeedback(hole, text) {
+  const feedback = document.createElement("div");
+  feedback.className = "feedback";
+  feedback.textContent = text;
+  hole.appendChild(feedback);
+
+  requestAnimationFrame(() => feedback.classList.add("show"));
+  setTimeout(() => feedback.remove(), 700);
+}
+
+function createSparkles(hole) {
+  for (let i = 0; i < 5; i++) {
+    const spark = document.createElement("span");
+    spark.className = "spark";
+    spark.style.transform =
+      `translate(-50%, -50%) rotate(${i * 72}deg)`;
+    hole.appendChild(spark);
+
+    requestAnimationFrame(() => spark.classList.add("show"));
+    setTimeout(() => spark.remove(), 500);
+  }
+}
+
+function hideCurrentMole() {
+  clearInterval(appearTimer);
+  appearTimer = null;
+
+  if (currentMole) {
+    currentMole.classList.remove("up");
+    currentMole = null;
+  }
+}
+
+function showRandomMole() {
+  if (!gameRunning) return;
+
+  hideCurrentMole();
+
+  const holes = [...document.querySelectorAll(".hole")];
+  const hole = holes[Math.floor(Math.random() * holes.length)];
+  const mole = hole.querySelector(".mole");
+
+  mole.classList.remove("hit");
+  setFrame(mole, 1);
+
+  currentMole = mole;
+  mole.classList.add("up");
+
+  playAppearAnimation(mole);
+
+  const speed = Math.max(
+    520,
+    1050 - Math.floor(score / 40) * 45
+  );
+
+  clearTimeout(moleTimer);
+  moleTimer = setTimeout(() => {
+    if (mole === currentMole) {
       hideCurrentMole();
-
-      const holes = [...document.querySelectorAll(".hole")];
-      const index = Math.floor(Math.random() * holes.length);
-      const hole = holes[index];
-      const mole = hole.querySelector(".mole");
-
-      currentMole = mole;
-      mole.classList.add("up");
-
-      // 地鼠停留時間會隨分數略微縮短，遊戲越來越有挑戰
-      const speed = Math.max(520, 1050 - Math.floor(score / 40) * 45);
-
-      clearTimeout(moleTimer);
-      moleTimer = setTimeout(() => {
-        if (mole === currentMole) {
-          mole.classList.remove("up");
-          currentMole = null;
-          combo = 0;
-          updateHUD();
-          scheduleNextMole(120);
-        }
-      }, speed);
-    }
-
-    function scheduleNextMole(delay = 250) {
-      clearTimeout(moleTimer);
-      moleTimer = setTimeout(showRandomMole, delay);
-    }
-
-    function updateHUD() {
-      scoreEl.textContent = score;
-      timeEl.textContent = timeLeft;
-      comboEl.textContent = combo;
-    }
-
-    function startGame() {
-      clearInterval(countdownTimer);
-      clearTimeout(moleTimer);
-
-      score = 0;
       combo = 0;
-      timeLeft = GAME_TIME;
-      gameRunning = true;
-
       updateHUD();
-      gameOverEl.textContent = "快快快！地鼠出現了！🐹";
-      startBtn.textContent = "重新開始 🔄";
-
-      showRandomMole();
-
-      countdownTimer = setInterval(() => {
-        timeLeft--;
-        updateHUD();
-
-        if (timeLeft <= 0) {
-          endGame();
-        }
-      }, 1000);
+      scheduleNextMole(120);
     }
+  }, speed);
+}
 
-    function endGame() {
-      gameRunning = false;
-      clearInterval(countdownTimer);
-      clearTimeout(moleTimer);
-      hideCurrentMole();
+function scheduleNextMole(delay = 250) {
+  clearTimeout(moleTimer);
+  moleTimer = setTimeout(showRandomMole, delay);
+}
 
-      gameOverEl.textContent = `遊戲結束！你的分數是 ${score} 分 🎀`;
-      startBtn.textContent = "再玩一次 ✨";
-    }
+function updateHUD() {
+  scoreEl.textContent = score;
+  timeEl.textContent = timeLeft;
+  comboEl.textContent = combo;
+}
 
-    startBtn.addEventListener("click", startGame);
+function startGame() {
+  clearInterval(countdownTimer);
+  clearTimeout(moleTimer);
+  clearAnimationTimers();
 
-    createBoard();
+  currentMole = null;
+
+  document.querySelectorAll(".mole").forEach((mole) => {
+    mole.classList.remove("up", "hit");
+    setFrame(mole, 1);
+  });
+
+  score = 0;
+  combo = 0;
+  timeLeft = GAME_TIME;
+  gameRunning = true;
+
+  updateHUD();
+  gameOverEl.textContent = "快快快！地鼠出現了！🐹";
+  startBtn.textContent = "重新開始 🔄";
+
+  showRandomMole();
+
+  countdownTimer = setInterval(() => {
+    timeLeft--;
     updateHUD();
+
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+}
+
+function endGame() {
+  gameRunning = false;
+
+  clearInterval(countdownTimer);
+  clearTimeout(moleTimer);
+  clearAnimationTimers();
+  hideCurrentMole();
+
+  document.querySelectorAll(".mole").forEach((mole) => {
+    mole.classList.remove("up", "hit");
+    setFrame(mole, 1);
+  });
+
+  gameOverEl.textContent =
+    `遊戲結束！你的分數是 ${score} 分 🎀`;
+  startBtn.textContent = "再玩一次 ✨";
+
+  const firstMole = board.querySelector(".mole");
+
+  if (firstMole) {
+    firstMole.classList.add("up");
+
+    let frame = 15;
+    setFrame(firstMole, frame);
+
+    blinkTimer = setInterval(() => {
+      frame = frame === 15 ? 16 : 15;
+      setFrame(firstMole, frame);
+    }, 450);
+  }
+}
+
+startBtn.addEventListener("click", startGame);
+
+createBoard();
+updateHUD();
+
   </script>
 </body>
 </html>
