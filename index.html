@@ -164,7 +164,7 @@
   position: absolute;
   z-index: 2;
   left: 12%;
-  bottom: -8%;
+  bottom: -5%;
   width: 76%;
   aspect-ratio: 1;
   background: transparent;
@@ -176,14 +176,16 @@
 }
 
 .mole.up {
-  transform: translateY(5%);
+  transform: translateY(0%);
 }
     .mole.hit {
   animation: hit .5s ease forwards;
+  transition: none;
 }
 @keyframes hit {
   0% {
     transform: translateY(5%) scale(1);
+    transition: none;
   }
   35% {
     transform: translateY(5%) scale(.86) rotate(-4deg);
@@ -209,10 +211,10 @@
 
 .mole-image {
   position: absolute;
-  left: -20%;
-  top: -20%;
-  width: 140%;
-  height: 140%;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
   pointer-events: none;
