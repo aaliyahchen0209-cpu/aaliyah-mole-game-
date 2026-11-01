@@ -148,7 +148,7 @@
         inset 0 -10px 14px rgba(102,70,63,.24),
         0 9px 0 #a97c72;
       overflow: hidden;
-      cursor: crosshair;
+      cursor: none;
     }
 
     .hole::after {
@@ -220,6 +220,19 @@
   display: block;
   pointer-events: none;
 }
+    /* 自訂錘子 */
+#gameHammer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+  transform: translate(-20%, -75%);
+}
   </style>
 </head>
 
@@ -245,7 +258,12 @@
       <div id="gameOver" class="game-over">按下「開始遊戲」開始！</div>
     </section>
   </main>
-
+<img
+  id="gameHammer"
+  src="hammer_1.png"
+  alt=""
+  draggable="false"
+/>
   <script>
  
 const board = document.getElementById("board");
@@ -254,7 +272,52 @@ const timeEl = document.getElementById("time");
 const comboEl = document.getElementById("combo");
 const startBtn = document.getElementById("startBtn");
 const gameOverEl = document.getElementById("gameOver");
+// ===== 自訂錘子 =====
+const gameHammer = document.getElementById("gameHammer");
+let hammerFrameTimer = null;
 
+// 滑鼠移入遊戲區域時顯示錘子
+board.addEventListener("pointerenter", (event) => {
+  gameHammer.style.left = event.clientX + "px";
+  gameHammer.style.top = event.clientY + "px";
+  gameHammer.style.display = "block";
+});
+
+// 錘子跟著滑鼠移動
+board.addEventListener("pointermove", (event) => {
+  gameHammer.style.left = event.clientX + "px";
+  gameHammer.style.top = event.clientY + "px";
+  gameHammer.style.display = "block";
+});
+
+// 離開遊戲區域時隱藏
+board.addEventListener("pointerleave", () => {
+  gameHammer.style.display = "none";
+});
+
+// 點擊時播放 hammer_2 到 hammer_9，再回到 hammer_1
+board.addEventListener("pointerdown", (event) => {
+  gameHammer.style.left = event.clientX + "px";
+  gameHammer.style.top = event.clientY + "px";
+  gameHammer.style.display = "block";
+
+  clearInterval(hammerFrameTimer);
+
+  let frame = 2;
+  gameHammer.src = `hammer_${frame}.png`;
+
+  hammerFrameTimer = setInterval(() => {
+    frame++;
+
+    if (frame <= 9) {
+      gameHammer.src = `hammer_${frame}.png`;
+    } else {
+      clearInterval(hammerFrameTimer);
+      hammerFrameTimer = null;
+      gameHammer.src = "hammer_1.png";
+    }
+  }, 70);
+});
 const HOLE_COUNT = 9;
 const GAME_TIME = 30;
 
