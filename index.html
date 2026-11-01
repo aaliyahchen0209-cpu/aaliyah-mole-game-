@@ -276,6 +276,15 @@ const gameOverEl = document.getElementById("gameOver");
 const gameHammer = document.getElementById("gameHammer");
 let hammerFrameTimer = null;
 
+// 預先載入 9 張錘子圖片
+const hammerFrames = [];
+
+for (let i = 1; i <= 9; i++) {
+  const img = new Image();
+  img.src = `hammer_${i}.png`;
+  hammerFrames.push(img);
+}
+
 // 滑鼠移入遊戲區域時顯示錘子
 board.addEventListener("pointerenter", (event) => {
   gameHammer.style.left = event.clientX + "px";
@@ -295,7 +304,7 @@ board.addEventListener("pointerleave", () => {
   gameHammer.style.display = "none";
 });
 
-// 點擊時播放 hammer_2 到 hammer_9，再回到 hammer_1
+// 點擊時播放動畫
 board.addEventListener("pointerdown", (event) => {
   gameHammer.style.left = event.clientX + "px";
   gameHammer.style.top = event.clientY + "px";
@@ -304,19 +313,19 @@ board.addEventListener("pointerdown", (event) => {
   clearInterval(hammerFrameTimer);
 
   let frame = 2;
-  gameHammer.src = `hammer_${frame}.png`;
+  gameHammer.src = hammerFrames[1].src;
 
   hammerFrameTimer = setInterval(() => {
     frame++;
 
     if (frame <= 9) {
-      gameHammer.src = `hammer_${frame}.png`;
+      gameHammer.src = hammerFrames[frame - 1].src;
     } else {
       clearInterval(hammerFrameTimer);
       hammerFrameTimer = null;
-      gameHammer.src = "hammer_1.png";
+      gameHammer.src = hammerFrames[0].src;
     }
-  }, 70);
+  }, 120);
 });
 const HOLE_COUNT = 9;
 const GAME_TIME = 30;
