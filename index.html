@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>馬卡龍打地鼠17 🐹</title>
+  <title>馬卡龍打地鼠26 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -281,10 +281,10 @@ const startBtn = document.getElementById("startBtn");
 const gameOverEl = document.getElementById("gameOver");
 // ===== 自訂錘子 =====
 const gameHammer = document.getElementById("gameHammer");
-let hammerFrameTimer = null;
-
-// ===== 自訂錘子 =====
+let hammerTimer = null;
+    
 // 滑鼠移入遊戲區域時顯示錘子
+  
 board.addEventListener("pointerenter", (event) => {
   gameHammer.src = "hammer_1.png";
   gameHammer.style.left = event.clientX + "px";
