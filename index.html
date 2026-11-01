@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>馬卡龍打地鼠26 🐹</title>
+  <title>馬卡龍打地鼠11 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -240,6 +240,52 @@
   display: none;
   transform: translate(-20%, -75%);
 }
+    /* ===== 遊戲結束畫面 ===== */
+.end-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.end-card {
+  position: relative;
+  width: min(92vw, 900px);
+}
+
+.end-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.final-score {
+  position: absolute;
+  left: 63%;
+  top: 61.5%;
+  transform: translate(-50%, -50%);
+  width: 29%;
+  text-align: center;
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 900;
+  color: #8b4d2e;
+}
+    .restart-area {
+  position: absolute;
+  left: 31%;
+  top: 70%;
+  width: 38%;
+  height: 22%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
   </style>
 </head>
 
@@ -262,9 +308,24 @@
 
       <div id="board" class="board" aria-label="打地鼠遊戲區"></div>
 
-      <div id="gameOver" class="game-over">按下「開始遊戲」開始！</div>
+     <div id="gameOver" class="game-over" style="display: none;">
+  按下「開始遊戲」開始！
+</div>
     </section>
   </main>
+<!-- 遊戲結束畫面 -->
+<div id="endScreen" class="end-screen" style="display: none;">
+  <div class="end-card">
+    <img src="end-game-sheet.png" alt="遊戲結束" />
+    <div id="finalScore" class="final-score"></div>
+    <button
+  id="restartArea"
+  class="restart-area"
+  type="button"
+  aria-label="重新開始"
+></button>
+  </div>
+</div>
 <img
   id="gameHammer"
   src="hammer_1.png"
@@ -526,6 +587,7 @@ function updateHUD() {
 }
 
 function startGame() {
+  document.getElementById("endScreen").style.display = "none";
   clearInterval(countdownTimer);
   clearTimeout(moleTimer);
   clearAnimationTimers();
@@ -563,7 +625,9 @@ function endGame() {
   clearTimeout(moleTimer);
   clearAnimationTimers();
   hideCurrentMole();
-
+  
+document.getElementById("endScreen").style.display = "flex";
+  document.getElementById("finalScore").textContent = score;
   document.querySelectorAll(".mole").forEach((mole) => {
     mole.classList.remove("up", "hit");
     setFrame(mole, 1);
@@ -572,22 +636,8 @@ function endGame() {
   gameOverEl.textContent =
     `遊戲結束！你的分數是 ${score} 分 🎀`;
   startBtn.textContent = "再玩一次 ✨";
-
-  const firstMole = board.querySelector(".mole");
-
-  if (firstMole) {
-    firstMole.classList.add("up");
-
-    let frame = 15;
-    setFrame(firstMole, frame);
-
-    blinkTimer = setInterval(() => {
-      frame = frame === 15 ? 16 : 15;
-      setFrame(firstMole, frame);
-    }, 450);
-  }
 }
-
+document.getElementById("restartArea").addEventListener("click", startGame);
 startBtn.addEventListener("click", startGame);
 
 createBoard();
