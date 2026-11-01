@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>馬卡龍打地鼠13 🐹</title>
+  <title>馬卡龍打地鼠17 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -283,17 +283,10 @@ const gameOverEl = document.getElementById("gameOver");
 const gameHammer = document.getElementById("gameHammer");
 let hammerFrameTimer = null;
 
-// 預先載入 9 張錘子圖片
-const hammerFrames = [];
-
-for (let i = 1; i <= 9; i++) {
-  const img = new Image();
-  img.src = `hammer_${i}.png`;
-  hammerFrames.push(img);
-}
-
+// ===== 自訂錘子 =====
 // 滑鼠移入遊戲區域時顯示錘子
 board.addEventListener("pointerenter", (event) => {
+  gameHammer.src = "hammer_1.png";
   gameHammer.style.left = event.clientX + "px";
   gameHammer.style.top = event.clientY + "px";
   gameHammer.style.display = "block";
@@ -311,28 +304,20 @@ board.addEventListener("pointerleave", () => {
   gameHammer.style.display = "none";
 });
 
-// 點擊時播放動畫
+// 點擊時切換成 hammer_5，再回到 hammer_1
 board.addEventListener("pointerdown", (event) => {
   gameHammer.style.left = event.clientX + "px";
   gameHammer.style.top = event.clientY + "px";
   gameHammer.style.display = "block";
 
-  clearInterval(hammerFrameTimer);
+  clearTimeout(hammerTimer);
 
-  let frame = 2;
-  gameHammer.src = hammerFrames[1].src;
+  gameHammer.src = "hammer_5.png";
 
-  hammerFrameTimer = setInterval(() => {
-    frame++;
-
-    if (frame <= 9) {
-      gameHammer.src = hammerFrames[frame - 1].src;
-    } else {
-      clearInterval(hammerFrameTimer);
-      hammerFrameTimer = null;
-      gameHammer.src = hammerFrames[0].src;
-    }
-  }, 70);
+  hammerTimer = setTimeout(() => {
+    gameHammer.src = "hammer_1.png";
+    hammerTimer = null;
+  }, 180);
 });
 const HOLE_COUNT = 9;
 const GAME_TIME = 30;
