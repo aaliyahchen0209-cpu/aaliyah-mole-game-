@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1813 🐹</title>
+  <title>森林打地鼠1822 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -286,6 +286,19 @@
   padding: 0;
   cursor: pointer;
 }
+    .start-intro {
+  position: absolute;
+  left: 18%;
+  top: 49%;
+  width: 64%;
+  height: 26%;
+  padding: 10px;
+  color: #765c3b;
+  font-size: clamp(12px, 1.4vw, 18px);
+  line-height: 1.5;
+  text-align: center;
+  overflow: auto;
+}
 /* ===== 遊戲開始介面 ===== */
 .start-screen {
   position: fixed;
@@ -342,6 +355,22 @@
 <div id="startScreen" class="start-screen">
   <div class="start-card">
     <img
+      <div class="start-intro">
+  <strong>歡迎來到森林打地鼠！</strong>
+
+  <p>森林裡的小地鼠正調皮地探出頭來，快拿起你的木槌，抓住牠們吧！</p>
+
+  🌼 <strong>遊戲規則</strong>
+
+  <p>
+    - 遊戲時間為 30 秒。<br>
+    - 每成功打中一隻地鼠，可獲得 10 分。<br>
+    - 連續擊中 5 次，可獲得額外獎勵 5 分。<br>
+    - 地鼠會隨著分數增加而變得更快喔！
+  </p>
+
+  <strong>看看時間結束前，你能拿到幾分吧！🌿</strong>
+</div>
       src="start-game-sheet.png"
       alt="森林打地鼠開始畫面"
     />
