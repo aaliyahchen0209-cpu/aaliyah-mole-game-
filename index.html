@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1836 🐹</title>
+  <title>森林打地鼠1907 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -671,7 +671,23 @@ function updateHUD() {
   timeEl.textContent = timeLeft;
   comboEl.textContent = combo;
 }
+// 切換背景音樂
+function playMusic(musicId) {
+  const musicList = ["startMusic", "playingMusic", "endMusic"];
 
+  musicList.forEach(id => {
+    const music = document.getElementById(id);
+    music.pause();
+    music.currentTime = 0;
+  });
+
+  const selectedMusic = document.getElementById(musicId);
+
+  selectedMusic.volume = 0.5;
+  selectedMusic.play().catch(error => {
+    console.log("音樂播放需要使用者操作");
+  });
+}
 function startGame() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("endScreen").style.display = "none";
@@ -692,6 +708,7 @@ document.querySelectorAll(".feedback, .spark").forEach((item) => {
   combo = 0;
   timeLeft = GAME_TIME;
   gameRunning = true;
+  playMusic("playingMusic");
 
   updateHUD();
   gameOverEl.textContent = "快快快！地鼠出現了！🐹";
@@ -708,6 +725,7 @@ document.querySelectorAll(".feedback, .spark").forEach((item) => {
 }
 
 function endGame() {
+  playMusic("endMusic");
   gameRunning = false;
 
   clearInterval(countdownTimer);
@@ -729,6 +747,7 @@ document.getElementById("endScreen").style.display = "flex";
 document.getElementById("restartArea").addEventListener("click", () => {
   document.getElementById("endScreen").style.display = "none";
   document.getElementById("startScreen").style.display = "flex";
+  playMusic("startMusic");
 });
 document.getElementById("startArea").addEventListener("click", startGame);
 startBtn.addEventListener("click", startGame);
@@ -737,5 +756,9 @@ createBoard();
 updateHUD();
 
   </script>
+  <!-- 背景音樂 -->
+<audio id="startMusic" src="start-game-music.mp3" loop></audio>
+<audio id="playingMusic" src="playing-game-music.mp3" loop></audio>
+<audio id="endMusic" src="end-game-music.mp3" loop></audio>
 </body>
 </html>
