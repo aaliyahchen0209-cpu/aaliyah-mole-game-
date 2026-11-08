@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠 🐹</title>
+  <title>森林打地鼠1756 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -286,10 +286,36 @@
   padding: 0;
   cursor: pointer;
 }
+  /* ===== 遊戲開始介面 ===== */
+.start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+
+.start-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
   </style>
 </head>
 
 <body>
+
+  <!-- 遊戲開始介面 -->
+  <div id="startScreen" class="start-screen">
+    <img
+      src="start-game-sheet.png"
+      alt="森林打地鼠開始畫面"
+    />
+  </div>
+
   <main class="game">
     <h1 class="title">🐹 森林打地鼠</h1>
     <p class="subtitle">準備好了嗎？抓住冒出來的小地鼠！</p>
