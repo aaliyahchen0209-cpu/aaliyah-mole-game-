@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1801 🐹</title>
+  <title>森林打地鼠1813 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -705,7 +705,10 @@ document.getElementById("endScreen").style.display = "flex";
     `遊戲結束！你的分數是 ${score} 分 🎀`;
   startBtn.textContent = "再玩一次 ✨";
 }
-document.getElementById("restartArea").addEventListener("click", startGame);
+document.getElementById("restartArea").addEventListener("click", () => {
+  document.getElementById("endScreen").style.display = "none";
+  document.getElementById("startScreen").style.display = "flex";
+});
 document.getElementById("startArea").addEventListener("click", startGame);
 startBtn.addEventListener("click", startGame);
 
