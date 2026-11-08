@@ -753,6 +753,10 @@ document.getElementById("startArea").addEventListener("click", startGame);
 startBtn.addEventListener("click", startGame);
 
 createBoard();
+    // 第一次點擊頁面時，啟動開始音樂
+document.addEventListener("pointerdown", function startBackgroundMusic() {
+  playMusic("startMusic");
+}, { once: true });
 updateHUD();
 
   </script>
