@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1756 🐹</title>
+  <title>森林打地鼠175９ 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -286,7 +286,7 @@
   padding: 0;
   cursor: pointer;
 }
-  /* ===== 遊戲開始介面 ===== */
+/* ===== 遊戲開始介面 ===== */
 .start-screen {
   position: fixed;
   inset: 0;
@@ -295,6 +295,36 @@
   justify-content: center;
   align-items: center;
   background: #000;
+}
+
+.start-card {
+  position: relative;
+  width: min(100vw, 150vh);
+}
+
+.start-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.start-area {
+  position: absolute;
+  left: 32%;
+  top: 76%;
+  width: 36%;
+  height: 18%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transform: none;
+}
+
+.start-area:hover,
+.start-area:active {
+  transform: none;
 }
 
 .start-screen img {
@@ -309,12 +339,21 @@
 <body>
 
   <!-- 遊戲開始介面 -->
-  <div id="startScreen" class="start-screen">
+<div id="startScreen" class="start-screen">
+  <div class="start-card">
     <img
       src="start-game-sheet.png"
       alt="森林打地鼠開始畫面"
     />
+
+    <button
+      id="startArea"
+      class="start-area"
+      type="button"
+      aria-label="開始遊戲"
+    ></button>
   </div>
+</div>
 
   <main class="game">
     <h1 class="title">🐹 森林打地鼠</h1>
@@ -613,6 +652,7 @@ function updateHUD() {
 }
 
 function startGame() {
+  document.getElementById("startScreen").style.display = "none";
   document.getElementById("endScreen").style.display = "none";
   clearInterval(countdownTimer);
   clearTimeout(moleTimer);
@@ -666,6 +706,7 @@ document.getElementById("endScreen").style.display = "flex";
   startBtn.textContent = "再玩一次 ✨";
 }
 document.getElementById("restartArea").addEventListener("click", startGame);
+document.getElementById("startArea").addEventListener("click", startGame);
 startBtn.addEventListener("click", startGame);
 
 createBoard();
