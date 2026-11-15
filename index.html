@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1840 🐹</title>
+  <title>森林打地鼠1845 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -710,7 +710,7 @@ function updateHUD() {
 }
 // 切換背景音樂
 // ===== 聲音開關 =====
-let soundEnabled = true;
+let soundEnabled = false;
 let currentMusicId = null;
 
 function stopAllMusic() {
@@ -764,6 +764,8 @@ document.getElementById("soundToggle").addEventListener("click", () => {
     }
   }
 });
+    document.getElementById("soundToggle").classList.add("muted");
+document.getElementById("soundToggle").setAttribute("aria-pressed", "false");
 function startGame() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("endScreen").style.display = "none";
