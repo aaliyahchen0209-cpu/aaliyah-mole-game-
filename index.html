@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>森林打地鼠1845 🐹</title>
+  <title>森林打地鼠2611151932 🐹</title>
   <style>
     :root {
       --pink: #ffb6cf;
@@ -65,12 +65,37 @@
       backdrop-filter: blur(8px);
     }
 
-    .hud {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+.hud {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  width: 100%;
+  aspect-ratio: 1152 / 180;
+  margin-bottom: 16px;
+  background-image: url("score-panel.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  align-items: center;
+  padding: 0 4%;
+}
+
+.stat {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+  font-weight: 700;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 18%;
+  font-size: clamp(16px, 2.4vw, 28px);
+  color: #765c3b;
+}
 
     .stat {
       border-radius: 22px;
@@ -84,10 +109,6 @@
       margin-top: 2px;
       font-size: 25px;
     }
-
-    .score { background: #ffe1ec; }
-    .time { background: #dff4ff; }
-    .combo { background: #eee5ff; }
 
     .controls {
       display: flex;
@@ -418,11 +439,20 @@
     <p class="subtitle">準備好了嗎？抓住冒出來的小地鼠！</p>
 
     <section class="panel">
-      <div class="hud">
-        <div class="stat score">分數<strong id="score">0</strong></div>
-        <div class="stat time">時間<strong id="time">30</strong></div>
-        <div class="stat combo">連擊<strong id="combo">0</strong></div>
-      </div>
+<div class="hud">
+  <div class="stat score">
+    <strong id="score">0</strong>
+  </div>
+  <div class="stat time">
+    <strong id="time">30</strong>
+  </div>
+  <div class="stat combo">
+    <strong id="combo">0</strong>
+  </div>
+  <div class="stat high-score">
+    <strong id="highScore">0</strong>
+  </div>
+</div>
 
       <div class="controls">
         <button id="startBtn">開始遊戲 ✨</button>
@@ -459,6 +489,8 @@
  
 const board = document.getElementById("board");
 const scoreEl = document.getElementById("score");
+    const highScoreEl = document.getElementById("highScore");
+let highScore = Number(localStorage.getItem("forestMoleHighScore")) || 0;
 const timeEl = document.getElementById("time");
 const comboEl = document.getElementById("combo");
 const startBtn = document.getElementById("startBtn");
@@ -707,6 +739,12 @@ function updateHUD() {
   scoreEl.textContent = score;
   timeEl.textContent = timeLeft;
   comboEl.textContent = combo;
+  if (score > highScore) {
+  highScore = score;
+  localStorage.setItem("forestMoleHighScore", highScore);
+}
+
+highScoreEl.textContent = highScore;
 }
 // 切換背景音樂
 // ===== 聲音開關 =====
