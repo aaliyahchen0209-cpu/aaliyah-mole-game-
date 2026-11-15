@@ -339,6 +339,36 @@
 .start-area:active {
   transform: none;
 }
+    /* 聲音開關 */
+.sound-toggle {
+  position: absolute;
+  left: 67%;
+  top: 74%;
+  width: 16%;
+  height: 21%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  z-index: 10;
+  transform: none;
+}
+
+/* 關閉聲音時顯示紅色斜槓 */
+.sound-toggle.muted::after {
+  content: "";
+  position: absolute;
+  width: 75%;
+  height: 6px;
+  background: #e53935;
+  border: 2px solid white;
+  border-radius: 10px;
+  left: 12%;
+  top: 48%;
+  transform: rotate(-45deg);
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
 
 .start-screen img {
   display: block;
@@ -373,6 +403,13 @@
       type="button"
       aria-label="開始遊戲"
     ></button>
+    <button
+  id="soundToggle"
+  class="sound-toggle"
+  type="button"
+  aria-label="切換聲音"
+  aria-pressed="true"
+></button>
   </div>
 </div>
 
@@ -672,7 +709,11 @@ function updateHUD() {
   comboEl.textContent = combo;
 }
 // 切換背景音樂
-function playMusic(musicId) {
+// ===== 聲音開關 =====
+let soundEnabled = true;
+let currentMusicId = null;
+
+function stopAllMusic() {
   const musicList = ["startMusic", "playingMusic", "endMusic"];
 
   musicList.forEach(id => {
@@ -680,14 +721,49 @@ function playMusic(musicId) {
     music.pause();
     music.currentTime = 0;
   });
+}
+
+// 切換背景音樂
+function playMusic(musicId) {
+  if (!soundEnabled) return;
+
+  stopAllMusic();
+
+  currentMusicId = musicId;
 
   const selectedMusic = document.getElementById(musicId);
-
   selectedMusic.volume = 0.5;
+
   selectedMusic.play().catch(error => {
     console.log("音樂播放需要使用者操作");
   });
 }
+
+// 按下喇叭切換聲音
+document.getElementById("soundToggle").addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+
+  const soundButton = document.getElementById("soundToggle");
+
+  soundButton.classList.toggle("muted", !soundEnabled);
+  soundButton.setAttribute("aria-pressed", soundEnabled);
+
+  if (!soundEnabled) {
+    stopAllMusic();
+    currentMusicId = null;
+  } else {
+    // 依照目前畫面恢復音樂
+    if (gameRunning) {
+      playMusic("playingMusic");
+    } else if (
+      document.getElementById("endScreen").style.display === "flex"
+    ) {
+      playMusic("endMusic");
+    } else {
+      playMusic("startMusic");
+    }
+  }
+});
 function startGame() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("endScreen").style.display = "none";
@@ -754,9 +830,6 @@ startBtn.addEventListener("click", startGame);
 
 createBoard();
     // 第一次點擊頁面時，啟動開始音樂
-document.addEventListener("pointerdown", function startBackgroundMusic() {
-  playMusic("startMusic");
-}, { once: true });
 updateHUD();
 
   </script>
